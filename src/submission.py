@@ -18,13 +18,11 @@ seed=123
 #scale_down_to=None
 scale_down_to=(1200,1972)
 input_size=(512,512)
-tile_overlap=64    # higher overlap will get better results (tiles less visible) at higher CPU cost
+tile_overlap=128    # higher overlap will get better results (tiles less visible) at higher CPU cost
 tile_core=(input_size[0]-tile_overlap,input_size[1]-tile_overlap)
 
 
-weights_file = "../pretrained/dehaze10_weights_128_0.0987226869911.hdf5"
-#weights_file = "../pretrained/dehaze10_weights_130_0.102881066501.hdf5"
-#weights_file = "../pretrained/dehaze10_weights_197_22.1342916489.hdf5"
+weights_file = "../pretrained/dehaze10_weights_126_0.096361676231.hdf5"
 
 if len(sys.argv) == 2 and sys.argv[1] == 'outdoor':
 	track="outdoor"
@@ -94,15 +92,16 @@ def get_tile_mask():
 			xd = x if x < a.shape[1]//2 else a.shape[1] - x
 			d = min(yd,xd)
 			v = 1.0 if d > tile_overlap else float(d) / tile_overlap
-			v = 0.0001 if v == 0. else v
+			v = 0.0001 if v <= 0. or d < 6 else v
 			a[y,x] = v
 	tile_mask = np.expand_dims(a, axis=2)
 	return tile_mask
 
 
-def predict(img):
+def predict(imgin):
 	# tile input image (rgbf)
-	#n_tiles=(3,4)
+	border_add = 8 # add 8 pixels of border to the image to get rid of border-artefacts
+	img = np.pad(imgin, ((border_add,border_add),(border_add,border_add),(0,0)), 'reflect')
 	n_tiles = ((img.shape[0] + tile_core[0] - 1) / tile_core[0], (img.shape[1] + tile_core[1] - 1) / tile_core[1])
 	sum = np.zeros(img.shape[0:2] + (3,),dtype=np.float32)
 	div = np.zeros(img.shape[0:2] + (1,),dtype=np.float32)
@@ -137,7 +136,8 @@ def predict(img):
 
 	# mittelwert
 	avg = sum / div
-	return avg
+	imgout = avg[border_add:-border_add,border_add:-border_add,:]  #remove artificial padding
+	return imgout
 
 
 def add_tile(x0, y0, pred, sum, div):
