@@ -4,9 +4,9 @@ Global Depth Local Dehaze
 NTIRE 2018 Ground truth-based single-image dehazing challenge
 
 ## Contents
-0. [Requirements and Installation](#Requirements and Installation)
-0. [Training](#Training)
-0. [Testing / Submission](#Testing_Submission)
+0. [Requirements and Installation](#requirements-and-installation)
+0. [Training](#training)
+0. [Testing / Submission](#testing--submission)
 
 
 ## Requirements and Installation
