@@ -20,7 +20,7 @@ initial_epoch=0
 epochs=800
 lr_initial=0.0005
 batch_size=7
-seed=123
+seed=321
 scale_down_to=(1200,1972)
 input_size=(512,512)
 
