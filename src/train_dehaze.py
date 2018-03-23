@@ -12,7 +12,7 @@ from generator_dehaze import ImageSequence, get_data, rgbf2bgr
 from keras_custom import init_seeds, PSNRLoss
 from kf_util import Logger, mkdir_p, find_best_weights
 from predict_depth import Depth4Predictor
-from models_dehaze import create_simple_dehaze5, create_simple_dehaze10
+from models_dehaze import create_simple_dehaze10
 from keras_contrib.losses import DSSIMObjective
 
 

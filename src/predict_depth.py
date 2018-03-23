@@ -7,7 +7,7 @@ import numpy as np
 import skimage
 import skimage.transform
 from kf_util import mkdir_p, flip_axis
-from models_depth import create_unetd_4, create_unetd_5
+from models_depth import create_unetd_4
 
 
 class DepthPredictor():
