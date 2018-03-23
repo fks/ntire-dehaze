@@ -76,12 +76,14 @@ Make sure to download and extract the NYU depth dataset to data/nyudepthv2. (see
     python train_depth.py
 ```
 Checkpoints and logs will be stored under log/depth4_xxx
+To use the newly trained weights you will need to change the path to the weights file in class Depth4Predictor.
 
 #### Dehaze Model
 ``` cd src
     python train_dehaze.py
 ```
 Checkpoints and logs will be stored under log/dehaze10_xxx
+To use the newly trained weights you will need to modify the weights_file path in submission.py.
 
 ## Testing / Submission
 Make sure to download and extract the test images to data/indoor/test and data/outdoor/test.
